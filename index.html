@@ -1,10 +1,408 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Women's Safety App</title>
+  <meta charset="UTF-8">
+  <meta name="vibodyewport" content="width=device-width, initial-scale=1.0">
+  <title>Aegis - Women's Safety App</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+ body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0b132b; 
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.phone-container {
+  background-color: #0d1b3e;
+  background-image: linear-gradient(180deg, #0d1b3e 0%, #0b132b 100%);
+  border: 1px solid #1e2d5a;
+  border-radius: 36px;
+  width: 100%;
+  max-width: 390px;
+  height: 92vh;
+  max-height: 800px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+    .status-bar {
+      height: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .status-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.9;
+    }
+
+    .browser-url-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px;
+      gap: 12px;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .url-input-field {
+      flex: 1;
+      background-color: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .url-input-field span {
+      color: #e2e8f0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tabs-badge {
+      border: 2px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 4px;
+      color: #94a3b8;
+    }
+
+    .app-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      flex-shrink: 0;
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .app-brand svg {
+      color: #3b82f6;
+    }
+
+    .app-content {
+      flex: 1;
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      overflow-y: auto; /* Adds a clean inner scroll if content grows */
+    }
+
+    .shield-icon-box {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    h1 span {
+      color: #3b82f6;
+    }
+
+    .subtitle-text {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: #8292ab;
+      margin-bottom: 20px;
+    }
+
+    .search-panel-box {
+      width: 100%;
+      background-color: rgba(13, 22, 38, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .input-field-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 6px 12px 6px;
+      color: #475569;
+    }
+
+    .route-input-element {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .route-input-element::placeholder {
+      color: #475569;
+    }
+
+    .submit-action-btn {
+      width: 100%;
+      background-color: #1d4ed8;
+      color: #93c5fd;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .map-container-box {
+      display: none;
+      width: 100%;
+      height: 150px;
+      border-radius: 12px;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    .map-container-box iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .output-status-panel {
+      display: none;
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      text-align: left;
+      margin-top: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pills-group-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .pill-tag-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .pill-tag-btn.safe { color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25); background-color: rgba(16, 185, 129, 0.05); }
+    .pill-tag-btn.caution { color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); background-color: rgba(245, 158, 11, 0.05); }
+    .pill-tag-btn.alert { color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); background-color: rgba(239, 68, 68, 0.05); }
+
+    .sos-panic-button {
+      width: 68px;
+      height: 68px;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border: 3px solid #f87171;
+      color: #ffffff;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto 5px auto;
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+      animation: pulseGlow 1.8s infinite;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .sos-panic-button:active {
+      transform: scale(0.92);
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+      70% { box-shadow: 0 0 0 16px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    .sos-alert-modal {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.95);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background-color: #111827;
+      border: 2px solid #ef4444;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.3);
+    }
+
+    .modal-box h2 {
+      color: #ef4444;
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-box p {
+      color: #d1d5db;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      margin-bottom: 16px;
+    }
+
+    .helpline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .helpline-btn {
+      background-color: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 10px;
+      padding: 10px;
+      color: #f87171;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: block;
+    }
+
+    .close-modal-btn {
+      background-color: #374151;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      width: 100%;
+      font-size: 0.85rem;
+    }
+
+    .system-nav-bar {
+      height: 40px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 40px;
+      opacity: 0.6;
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .sys-btn { width: 16px; height: 16px; border: 2px solid #ffffff; border-radius: 4px; }
+    .sys-btn.circle { border-radius: 50%; width: 14px; height: 14px; }
+    .sys-btn.triangle { border: none; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-right: 8px solid #ffffff; transform: rotate(180deg); }
+  </style>
 </head>
 <body>
-    <h1>Women's Safety App</h1>
-    <p>Your safety matters.</p>
-</body>
-</html>
+
+  <div class="phone-container">
+    <div id="sosModal" class="sos-alert-modal">
+      <div class="modal-box">
+        <h2>🚨 EMERGENCY SOS ACTIVATED</h2>
+        <p>Siren active. Live GPS coordinates encrypted and sent to emergency contacts.</p>
+        
+        <div class="helpline-grid">
+          <a href="tel:112" class="helpline-btn">📞 Emergency (112)</a>
+          <a href="tel:1091" class="helpline-btn">📞 Helpline (1091)</a>
+        </div>
+
+        <button class="close-modal-btn" onclick="closeSosAlert()">Deactivate Siren</button>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div>7:41</div>
+      <div class="status-right"><span>5G</span><span>65%</span></div>
+    </div>
+
+    <div class="browser-url-bar">
+      <div class="url-input-field">
